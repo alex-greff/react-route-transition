@@ -20,11 +20,15 @@ function hasPath(pathOrPaths: TPathOrPaths, path: History.Path) {
   const pathsArray = removeSearchArray(arrarizePath(pathOrPaths));
 
   return pathsArray.some((potentialPath) => {
-    return matchPath(
+    return !!matchPath(
       removeSearch(path), 
       { path: potentialPath, exact: true, strict: false }
     );
   });
+}
+
+function isPathEqual(pathA: string, pathB: string) {
+  return !!matchPath(pathA, { path: pathB, exact: true, strict: false });
 }
 
 export default function () {
@@ -34,7 +38,7 @@ export default function () {
 
   const push = useCallback(
     async (path: History.Path, state?: History.LocationState) => {
-      if (path !== location.pathname) {
+      if (!isPathEqual(path, location.pathname)) {
         await Promise.all(
           listeners
             .filter(
@@ -50,7 +54,7 @@ export default function () {
 
       wrappedPush(path, state);
 
-      if (path !== location.pathname) {
+      if (!isPathEqual(path, location.pathname)) {
         await Promise.all(
           listeners
             .filter(
