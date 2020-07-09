@@ -20,7 +20,10 @@ function hasPath(pathOrPaths: TPathOrPaths, path: History.Path) {
   const pathsArray = removeSearchArray(arrarizePath(pathOrPaths));
 
   return pathsArray.some((potentialPath) => {
-    return matchPath(removeSearch(path), potentialPath);
+    return matchPath(
+      removeSearch(path), 
+      { path: potentialPath, exact: true, strict: false }
+    );
   });
 }
 
