@@ -20,6 +20,7 @@ function hasPath(pathOrPaths: TPathOrPaths, path: History.Path) {
   const pathsArray = removeSearchArray(arrarizePath(pathOrPaths));
 
   return pathsArray.some((potentialPath) => {
+    console.log("hasPath: matching", path, "to", potentialPath, !!matchPath(removeSearch(path), { path: potentialPath, exact: true, strict: false })); // TODO: remove
     return !!matchPath(
       removeSearch(path), 
       { path: potentialPath, exact: true, strict: false }
@@ -28,6 +29,7 @@ function hasPath(pathOrPaths: TPathOrPaths, path: History.Path) {
 }
 
 function isPathEqual(pathA: string, pathB: string) {
+  console.log("isPathEqual: matching", pathA, "to", pathB, !!matchPath(pathA, { path: pathB, exact: true, strict: false })); // TODO: remove
   return !!matchPath(pathA, { path: pathB, exact: true, strict: false });
 }
 
