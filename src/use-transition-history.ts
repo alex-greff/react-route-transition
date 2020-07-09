@@ -38,6 +38,8 @@ export default function () {
     TransitionContext
   );
 
+  console.log(location);
+
   const push = useCallback(
     async (path: History.Path, state?: History.LocationState) => {
       if (!isPathEqual(path, location.pathname)) {
@@ -70,7 +72,7 @@ export default function () {
         );
       }
     },
-    []
+    [location.pathname]
   );
 
   return {
