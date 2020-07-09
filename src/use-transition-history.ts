@@ -2,7 +2,7 @@ import { TPathOrPaths } from './types';
 import { useContext, useCallback } from 'react';
 import * as History from 'history';
 import { TransitionContext } from './TransitionProvider';
-import { matchPath } from "react-router";
+import { matchPath } from "react-router-dom";
 
 function arrarizePath(pathOrPaths: TPathOrPaths) {
   return typeof pathOrPaths === 'string' ? [pathOrPaths] : pathOrPaths ?? [];
