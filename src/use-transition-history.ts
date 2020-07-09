@@ -48,7 +48,7 @@ export default function () {
                   hasPath(listener.to, path))
             )
             .filter((listener) => !!listener.onLeave)
-            .map((listener) => listener.onLeave!({...location}))
+            .map((listener) => listener.onLeave!(location, listener))
         );
       }
 
@@ -64,7 +64,7 @@ export default function () {
                   hasPath(listener.to, path))
             )
             .filter((listener) => !!listener.onEnter)
-            .map((listener) => listener.onEnter!({...location}))
+            .map((listener) => listener.onEnter!(location, listener))
         );
       }
     },

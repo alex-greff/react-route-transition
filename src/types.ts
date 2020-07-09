@@ -6,8 +6,8 @@ export interface ITransitionListener {
   path?: TPathOrPaths;
   from?: TPathOrPaths;
   to?: TPathOrPaths;
-  onEnter?: (location: TLocation) => Promise<void>;
-  onLeave?: (location: TLocation) => Promise<void>;
+  onEnter?: (location: TLocation, listener: Omit<ITransitionListener, "onEnter" | "onLeave">) => Promise<void>;
+  onLeave?: (location: TLocation, listener: Omit<ITransitionListener, "onEnter" | "onLeave">) => Promise<void>;
 }
 
 export interface ITransitionOptions {
