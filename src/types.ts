@@ -2,12 +2,17 @@ import * as History from 'history';
 
 export type TPathOrPaths = History.Path | History.Path[] | undefined;
 
+export interface ITransitionCbData {
+  from: string;
+  to: string;
+}
+
 export interface ITransitionListener {
   path?: TPathOrPaths;
   from?: TPathOrPaths;
   to?: TPathOrPaths;
-  onEnter?: (location: TLocation, listener: Omit<ITransitionListener, "onEnter" | "onLeave">) => Promise<void>;
-  onLeave?: (location: TLocation, listener: Omit<ITransitionListener, "onEnter" | "onLeave">) => Promise<void>;
+  onEnter?: (data: ITransitionCbData) => Promise<void>;
+  onLeave?: (data: ITransitionCbData) => Promise<void>;
 }
 
 export interface ITransitionOptions {

@@ -1,4 +1,4 @@
-import { TPathOrPaths } from './types';
+import { TPathOrPaths, ITransitionCbData } from './types';
 import { useContext, useCallback } from 'react';
 import * as History from 'history';
 import { TransitionContext } from './TransitionProvider';
@@ -38,6 +38,11 @@ export default function () {
 
   const push = useCallback(
     async (path: History.Path, state?: History.LocationState) => {
+      const data: ITransitionCbData = {
+        from: location.pathname,
+        to: path
+      };
+
       if (!isPathEqual(path, location.pathname)) {
         await Promise.all(
           listeners
@@ -48,7 +53,7 @@ export default function () {
                   hasPath(listener.to, path))
             )
             .filter((listener) => !!listener.onLeave)
-            .map((listener) => listener.onLeave!(location, listener))
+            .map((listener) => listener.onLeave!(data))
         );
       }
 
@@ -64,7 +69,7 @@ export default function () {
                   hasPath(listener.to, path))
             )
             .filter((listener) => !!listener.onEnter)
-            .map((listener) => listener.onEnter!(location, listener))
+            .map((listener) => listener.onEnter!(data))
         );
       }
     },
