@@ -2,6 +2,7 @@ import { TPathOrPaths } from './types';
 import { useContext, useCallback } from 'react';
 import * as History from 'history';
 import { TransitionContext } from './TransitionProvider';
+import { matchPath } from "react-router";
 
 function arrarizePath(pathOrPaths: TPathOrPaths) {
   return typeof pathOrPaths === 'string' ? [pathOrPaths] : pathOrPaths ?? [];
@@ -18,11 +19,9 @@ function removeSearchArray(paths: History.Path[]) {
 function hasPath(pathOrPaths: TPathOrPaths, path: History.Path) {
   const pathsArray = removeSearchArray(arrarizePath(pathOrPaths));
 
-  if (pathsArray.indexOf('*') !== -1) {
-    return true;
-  }
-
-  return pathsArray.indexOf(removeSearch(path)) !== -1;
+  return pathsArray.some((potentialPath) => {
+    return matchPath(path, potentialPath);
+  });
 }
 
 export default function () {
